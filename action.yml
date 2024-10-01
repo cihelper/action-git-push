@@ -40,20 +40,24 @@ inputs:
 outputs:
   git-head:
     description: "The reference of the commit that was pushed or the current HEAD if no changes were pushed"
-    value: ${{ steps.cmd.outputs.git-head }}
+    value: ${{ steps.parse.outputs.git-head }}
   changes:
     description: Whether changes were pushed. The return value is in the form of a string. ("true" or "false")
-    value: ${{ steps.cmd.outputs.changes }}
+    value: ${{ steps.git.outputs.changes }}
 
 runs:
   using: composite
   steps:
     - shell: bash
-      id: cmd
+      id: setup
+      name: Setup Git
       run: |
         git config user.name "${{ inputs.user-name }}"
         git config user.email "${{ inputs.user-email }}"
-
+    - shell: bash
+      id: git
+      name: Run Git
+      run: |
         if [ -n "$(git status --porcelain)" ]; then
           echo "Changes detected"
           git add ${{ inputs.git-add-args }} ${{ inputs.path }}
@@ -64,5 +68,8 @@ runs:
           echo "No changes detected"
           echo "changes=false" >> $GITHUB_OUTPUT
         fi
-
+    - shell: bash
+      id: parse
+      name: Parse Git Head
+      run: |
         echo "git-head=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
