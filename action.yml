@@ -38,9 +38,9 @@ inputs:
     default: ${{ github.token }}
 
 outputs:
-  ref:
+  git-head:
     description: "The reference of the commit that was pushed or the current HEAD if no changes were pushed"
-    value: ${{ steps.cmd.outputs.ref }}
+    value: ${{ steps.cmd.outputs.git-head }}
   changes:
     description: Whether changes were pushed. The return value is in the form of a string. ("true" or "false")
     value: ${{ steps.cmd.outputs.changes }}
@@ -65,4 +65,4 @@ runs:
           echo "changes=false" >> $GITHUB_OUTPUT
         fi
 
-        echo "ref=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        echo "git-head=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
