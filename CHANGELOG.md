@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/cihelper/action-git-push/compare/v1.0.2...v1.0.3) (2024-10-01)
+
+
+### Bug Fixes
+
+* use correct input variables ([1c42d04](https://github.com/cihelper/action-git-push/commit/1c42d04fac1920bbf51c262518e5250a165bbfda))
+
 ## [1.0.2](https://github.com/cihelper/action-git-push/compare/v1.0.1...v1.0.2) (2024-10-01)
 
 
