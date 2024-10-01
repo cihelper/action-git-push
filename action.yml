@@ -60,9 +60,9 @@ runs:
       run: |
         if [ -n "$(git status --porcelain)" ]; then
           echo "Changes detected"
-          git add ${{ inputs.git-add-args }} ${{ inputs.path }}
-          git commit ${{ inputs.git-commit-args }} -m "${{ inputs.message }}"
-          git push ${{ inputs.git-push-args }}
+          git add ${{ inputs.add-args }} ${{ inputs.add-path }}
+          git commit ${{ inputs.commit-args }} -m "${{ inputs.commit-message }}"
+          git push ${{ inputs.push-args }}
           echo "changes=true" >> $GITHUB_OUTPUT
         else
           echo "No changes detected"
