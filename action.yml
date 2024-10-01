@@ -1,0 +1,68 @@
+name: "Git Push"
+description: "Action to add, commit, and push changes to a git repository"
+branding:
+  icon: upload-cloud
+  color: blue
+
+inputs:
+  add-args:
+    description: "Arguments to pass to `git add`"
+    required: false
+    default: "--all"
+  add-path:
+    description: "Path to add to the git repository"
+    required: false
+    default: "."
+  commit-args:
+    description: "Arguments to pass to `git commit`"
+    required: false
+    default: ""
+  commit-message:
+    description: "Commit message"
+    required: true
+  push-args:
+    description: "Arguments to pass to `git push`"
+    required: false
+    default: ""
+  user-name:
+    description: "Git user name"
+    required: false
+    default: "github-actions[bot]"
+  user-email:
+    description: "Git user email"
+    required: false
+    default: "41898282+github-actions[bot]@users.noreply.github.com"
+  github-token:
+    description: "GitHub token"
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  ref:
+    description: "The reference of the commit that was pushed or the current HEAD if no changes were pushed"
+    value: ${{ steps.cmd.outputs.ref }}
+  changes:
+    description: Whether changes were pushed. The return value is in the form of a string. ("true" or "false")
+    value: ${{ steps.cmd.outputs.changes }}
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      id: cmd
+      run: |
+        git config user.name "${{ inputs.user-name }}"
+        git config user.email "${{ inputs.user-email }}"
+
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "Changes detected"
+          git add ${{ inputs.git-add-args }} ${{ inputs.path }}
+          git commit ${{ inputs.git-commit-args }} -m "${{ inputs.message }}"
+          git push ${{ inputs.git-push-args }}
+          echo "changes=true" >> $GITHUB_OUTPUT
+        else
+          echo "No changes detected"
+          echo "changes=false" >> $GITHUB_OUTPUT
+        fi
+
+        echo "ref=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
