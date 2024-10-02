@@ -5,25 +5,27 @@ branding:
   color: blue
 
 inputs:
-  add-args:
-    description: "Arguments to pass to `git add`"
-    required: false
-    default: "--all"
   add-path:
     description: "Path to add to the git repository"
     required: false
     default: "."
+  commit-message:
+    description: "Commit message"
+    required: true
+  # Additional args for the git commands
+  add-args:
+    description: "Arguments to pass to `git add`"
+    required: false
+    default: ""
   commit-args:
     description: "Arguments to pass to `git commit`"
     required: false
     default: ""
-  commit-message:
-    description: "Commit message"
-    required: true
   push-args:
     description: "Arguments to pass to `git push`"
     required: false
     default: ""
+  # Git user information
   user-name:
     description: "Git user name"
     required: false
@@ -32,18 +34,19 @@ inputs:
     description: "Git user email"
     required: false
     default: "41898282+github-actions[bot]@users.noreply.github.com"
+  # Others
   github-token:
     description: "GitHub token"
     required: false
     default: ${{ github.token }}
 
 outputs:
-  git-head:
+  sha:
     description: "The reference of the commit that was pushed or the current HEAD if no changes were pushed"
-    value: ${{ steps.parse.outputs.git-head }}
-  changes:
-    description: Whether changes were pushed. The return value is in the form of a string. ("true" or "false")
-    value: ${{ steps.git.outputs.changes }}
+    value: ${{ steps.parse.outputs.sha }}
+  committed:
+    description: Whether changes were detected. The return value is in the form of a string. ("true" or "false")
+    value: ${{ steps.git.outputs.committed }}
 
 runs:
   using: composite
@@ -63,13 +66,13 @@ runs:
           git add ${{ inputs.add-args }} ${{ inputs.add-path }}
           git commit ${{ inputs.commit-args }} -m "${{ inputs.commit-message }}"
           git push ${{ inputs.push-args }}
-          echo "changes=true" >> $GITHUB_OUTPUT
+          echo "committed=true" >> $GITHUB_OUTPUT
         else
           echo "No changes detected"
-          echo "changes=false" >> $GITHUB_OUTPUT
+          echo "committed=false" >> $GITHUB_OUTPUT
         fi
     - shell: bash
       id: parse
-      name: Parse Git Head
+      name: Parse Git Info
       run: |
-        echo "git-head=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
