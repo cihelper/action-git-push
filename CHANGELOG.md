@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/cihelper/action-git-push/compare/v1.0.3...v1.1.0) (2024-10-02)
+
+
+### Features
+
+* update inputs/outputs ([e022c1c](https://github.com/cihelper/action-git-push/commit/e022c1cf4fe84d746dc0370fc3227a916c5956f6))
+
 ## [1.0.3](https://github.com/cihelper/action-git-push/compare/v1.0.2...v1.0.3) (2024-10-01)
 
 
