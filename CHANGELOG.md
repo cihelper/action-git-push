@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/cihelper/action-git-push/compare/v1.1.0...v1.1.1) (2024-10-02)
+
+
+### Bug Fixes
+
+* slightly rename sha output ([7a09b5f](https://github.com/cihelper/action-git-push/commit/7a09b5fdac6d86fdf4caa8ddd5dc497d77dc3f8d))
+
 ## [1.1.0](https://github.com/cihelper/action-git-push/compare/v1.0.3...v1.1.0) (2024-10-02)
 
 
