@@ -41,9 +41,9 @@ inputs:
     default: ${{ github.token }}
 
 outputs:
-  sha:
+  head-sha:
     description: "The reference of the commit that was pushed or the current HEAD if no changes were pushed"
-    value: ${{ steps.parse.outputs.sha }}
+    value: ${{ steps.parse.outputs.head-sha }}
   committed:
     description: Whether changes were detected. The return value is in the form of a string. ("true" or "false")
     value: ${{ steps.git.outputs.committed }}
@@ -75,4 +75,4 @@ runs:
       id: parse
       name: Parse Git Info
       run: |
-        echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        echo "head-sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
