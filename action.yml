@@ -12,6 +12,14 @@ inputs:
   commit-message:
     description: "Commit message"
     required: true
+  push-remote:
+    description: "Remote to push to"
+    required: false
+    default: "origin"
+  push-ref:
+    description: "Ref to push to"
+    required: false
+    default: ""
   # Additional args for the git commands
   add-args:
     description: "Arguments to pass to `git add`"
@@ -65,7 +73,7 @@ runs:
           echo "Changes detected"
           git add ${{ inputs.add-args }} ${{ inputs.add-path }}
           git commit ${{ inputs.commit-args }} -m "${{ inputs.commit-message }}"
-          git push ${{ inputs.push-args }}
+          git push ${{ inputs.push-args }} ${{ inputs.push-remote }} ${{ inputs.push-ref }}
           echo "committed=true" >> $GITHUB_OUTPUT
         else
           echo "No changes detected"
