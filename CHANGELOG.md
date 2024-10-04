@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/cihelper/action-git-push/compare/v1.1.1...v1.2.0) (2024-10-04)
+
+
+### Features
+
+* add inputs for push-remote and push-ref ([0b0d1e1](https://github.com/cihelper/action-git-push/commit/0b0d1e10c1844e425042c3360577d1ba3e82a76e))
+
 ## [1.1.1](https://github.com/cihelper/action-git-push/compare/v1.1.0...v1.1.1) (2024-10-02)
 
 
